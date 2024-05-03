@@ -1,0 +1,28 @@
+<template>
+    <lightning-card>
+        <template lwc:if={isAppPage}>
+            <template lwc:if={fieldApiName}>
+                <c-path-l-w-c field-api-name={fieldApiName} record-id={recordId} object-api-name={objectApiName} record-type={recordType}></c-path-l-w-c>
+            </template>
+            <template lwc:if={fieldApiName2}>
+                <c-path-l-w-c field-api-name={fieldApiName2} record-id={recordId} object-api-name={objectApiName} record-type={recordType}></c-path-l-w-c>
+            </template>
+        </template>
+        <template lwc:if={isHomePage}>
+            <template lwc:if={fieldApiName}>
+                <c-path-l-w-c field-api-name={fieldApiName} record-id={recordId} object-api-name={objectApiName} record-type={recordType}></c-path-l-w-c>
+            </template>
+            <template lwc:if={fieldApiName2}>
+                <c-path-l-w-c field-api-name={fieldApiName2} record-id={recordId} object-api-name={objectApiName} record-type={recordType}></c-path-l-w-c>
+            </template>
+        </template>
+        <template lwc:if={isRecordPage}>
+            <template lwc:if={fieldApiName}>
+                <c-path-l-w-c field-api-name={fieldApiName} record-id={recordId} record-type={recordType}></c-path-l-w-c>
+            </template>
+            <template lwc:if={fieldApiName2}>
+                <c-path-l-w-c field-api-name={fieldApiName2} record-id={recordId} record-type={recordType}></c-path-l-w-c>
+            </template>
+        </template>
+    </lightning-card>
+</template>
