@@ -1,16 +1,4 @@
 global with sharing class MetaConfigurationController extends VisualEditor.DynamicPickList{
-    
-    //attempt to handle selection of the object in the LWC
-    public static String objectSelected;
-    @AuraEnabled
-    public static void getObj(String obj){
-        try {
-            objectSelected = obj;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-    
     //overriding VisualEditor.DynamicPickList methods
     global override VisualEditor.DataRow getDefaultValue() {
         return new VisualEditor.DataRow('', 'Account');

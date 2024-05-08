@@ -15,16 +15,7 @@ global with sharing class LwcGetPicklistValues extends VisualEditor.DynamicPickL
         VisualEditor.DynamicPicklistRows dynamicPicklistValues = new VisualEditor.DynamicPicklistRows();
 
         //attempt to receive chosen object from MetaConfigurationController class. It does not work
-        Schema.SObjectType objType;
-        if(context.pageType == 'HomePage' || context.pageType == 'AppPage')
-        {
-            objType = Schema.getGlobalDescribe().get(MetaConfigurationController.objectSelected);
-            //objType = Schema.getGlobalDescribe().get(context.entityName);
-        }
-        else
-        {
-            objType = Schema.getGlobalDescribe().get(context.entityName);
-        }
+        Schema.SObjectType objType = Schema.getGlobalDescribe().get(context.entityName);
         
         if( objType != null ){
             for (Schema.SObjectField field : objType.getDescribe().fields.getMap().values()) {

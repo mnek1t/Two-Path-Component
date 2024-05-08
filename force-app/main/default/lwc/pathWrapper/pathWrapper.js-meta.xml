@@ -9,32 +9,16 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property name="fieldApiName" label="Field API Name 1"  type="String" datasource="apex://LwcGetPicklistValues" description="The API name of the picklist to display data from."/>
+            <property name="lookupApiName" label="Parent Object"  type="String" datasource="apex://LwcGetParentPicklistValues" description="The API name of the parents to display data from."/>
+            <property name="fieldApiName" label="Field API Name 1"  type="String" description="The API name of the picklist to display data from."/>
+            <!-- <property name="fieldApiName" label="Field API Name 1"  type="String" datasource="apex://LwcGetPicklistValues" description="The API name of the picklist to display data from."/> -->
             <property name="fieldApiName2" label="Field API Name 2" type="String" datasource="apex://LwcGetPicklistValues" description="The API name of the picklist to display data from."/>
-            <!-- <property name="recordType" label="Record type" type="String" datasource="apex://LwcGetRecordTypeValues" description="The API name of the record type to display data from."/> -->
         </targetConfig>
 
         <targetConfig targets="lightning__AppPage, lightning__HomePage">
-            <!-- <event name="objectselected" label="Object Selected" description="This event fires when object is selected.">
-                <schema>
-                    {
-                        "type": "object",
-                        "properties": {
-                            "objectApiName": {
-                                "type": "string",
-                                "title": "Object API Name",
-                                "description": "An object API name (include '__c' for custom objects)"
-                            }
-                       }
-                    }
-                </schema>
-            </event> -->
             <property name="objectApiName" label="Select an object" type="String" datasource="apex://MetaConfigurationController" description="The API name of the object to display data from."/>
-            <property label="Show Hide Button" name="hideUpdateButton" type="Boolean" default="true"/>
-            <!-- <property name="fieldApiName3" label="Field API Name 1"  type="String" datasource="apex://LwcGetPicklistValues" description="The API name of the picklist to display data from."/>
-            <property name="fieldApiName4" label="Field API Name 2" type="String" datasource="apex://LwcGetPicklistValues" description="The API name of the picklist to display data from."/>
-            <property name="recordType" label="Record type" type="String" datasource="apex://LwcGetRecordTypeValues" description="The API name of the record type to display data from."/> -->
             <property name="recordType" label="Record type" type="String" description="The API name of the record type to display data from."/>
+            
             <!-- define picklists by hardcoding -->
             <property name="fieldApiName" label="Field API Name 1"  type="String" description="The API name of the picklist to display data from."/>
             <property name="fieldApiName2" label="Field API Name 2" type="String"  description="The API name of the picklist to display data from."/>

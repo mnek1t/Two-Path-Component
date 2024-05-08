@@ -1,7 +1,7 @@
 <template>
         <lightning-card title={heading}>
-            <div>
-                <lightning-progress-indicator current-step={selectedStep} type="path">
+            <div class="slds-var-m-around_medium">
+                <lightning-progress-indicator class="slds-region_medium" current-step={selectedStep} type="path">
                     <template for:each={fieldValueList} for:item="value">
                         <lightning-progress-step  key={value} label={value} value={value} onstepfocus={handleSelection} role="listitem"></lightning-progress-step>
                     </template>

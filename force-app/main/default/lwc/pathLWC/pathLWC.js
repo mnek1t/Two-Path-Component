@@ -5,19 +5,16 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
  
 export default class PathLWC extends LightningElement 
 {
-    //test field received from dynamic picklist in pathWrapper
-    // @api fieldApiName3
-    // @api fieldApiName4
 
     @api fieldApiName
     @api objectApiName 
     @api recordId
     @api recordType
+
     recordTypeId
     objectInfo
     fieldValueList
     formattedFieldApiName
-    recordInfo
 
     selectedStep
     currentStep
@@ -28,15 +25,19 @@ export default class PathLWC extends LightningElement
     //flag to prevent endless updation
     userTriggeredUpdate = false;
 
+    connectedCallback()
+    {
+        console.log('this.objectApiName',this.objectApiName )
+    }
     //get info about the record
     @wire(getRecord, { recordId: '$recordId', layoutTypes: ["Full", "Compact"], modes:['View', 'Edit', 'Create']})
     recordInfoHandler({data, error}){
-        if(data){
+        if(data && data.fields[this.fieldApiName]){
             this.currentStep = data.fields[this.fieldApiName].value;
             this.selectedStep = this.currentStep;
             this.formattedFieldApiName = data.apiName + '.' + this.fieldApiName 
-            this.recordInfo = data;
-            this.objectApiName = this.objectApiName ? this.objectApiName : data.apiName;
+            this.objectApiName = data.apiName;
+            //get the record type ID from the record type name
             this.recordTypeId = data.recordTypeId;
             console.log('recordInfoHandler', data)
         }
@@ -46,22 +47,9 @@ export default class PathLWC extends LightningElement
     }
 
     //get info about the object
-    @wire(getObjectInfo, { objectApiName: '$objectApiName' })
-    objectInfoHandler({data, error}){
-        if(data){ 
-            this.objectInfo = data;
-            // this.recordTypeId = this.objectApiName.defaultRecodrdTypeId;
-            // this.recordTypeId = Object.keys(this.objectInfo.recordTypeInfos)
-            //     .find((rti) => this.objectInfo.recordTypeInfos[rti].name === this.recordType.replace(/_/g, ' '))
-            //console.log(this.recordType)
-            console.log('this.objectInfo', this.objectInfo)
-            console.log('this.recordTypeId', this.recordTypeId)
-        }
-        else{
-            console.error(error)
-        }
-    }
-
+     @wire(getObjectInfo, { objectApiName: '$objectApiName' })
+     objectInfo;
+     
     //get picklist values
     @wire(getPicklistValues, { recordTypeId: "$recordTypeId", fieldApiName: '$formattedFieldApiName' })
     picklistValuesHandler({data, error}){
@@ -79,7 +67,7 @@ export default class PathLWC extends LightningElement
     //handle click on the path item
     handleSelection(event){
         const stepName = event.target.label;
-        if(this.currentStep === this.lastStepName && this.currentStep ===stepName){
+        if(this.currentStep === this.lastStepName && this.currentStep === stepName){
             this.showCompleteStep = false;
             this.showCurrentStep = false
         }
@@ -131,20 +119,10 @@ export default class PathLWC extends LightningElement
           );
     }
 
-    //get the record type ID from the record type name
-    // get recordTypeId() {
-    //     if (this.objectInfo) {
-    //         console.log('this.objectInfo.recordTypeInfos', this.objectInfo.recordTypeInfos)
-    //         return Object.keys(this.objectInfo.recordTypeInfos)
-    //                 .find((rti) => this.objectInfo.recordTypeInfos[rti].name === this.recordType);
-    //     }
-    //     return null;
-    // }
-
     //get heading for the component
     get heading(){
-        if(this.objectInfo && this.objectInfo.fields[this.fieldApiName]){
-            const fieldInfo = this.objectInfo.fields[this.fieldApiName];
+        if(this.objectInfo.data){  
+            const fieldInfo = this.objectInfo.data.fields[this.fieldApiName];
             return fieldInfo ? fieldInfo.label : '';
         }
         return '';
