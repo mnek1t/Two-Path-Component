@@ -1,17 +1,16 @@
-global with sharing class MetaConfigurationController extends VisualEditor.DynamicPickList{
-    //overriding VisualEditor.DynamicPickList methods
+global with sharing class ObjectsPicklistController extends VisualEditor.DynamicPickList{
     global override VisualEditor.DataRow getDefaultValue() {
-        return new VisualEditor.DataRow('', 'Account');
+        return new VisualEditor.DataRow('', 'Select a Field');
     }
 
     global override VisualEditor.DynamicPickListRows getValues() {
         VisualEditor.DynamicPickListRows dynamicPicklistValues = new VisualEditor.DynamicPickListRows();
-        Map<String, Schema.SObjectType> gd = Schema.getGlobalDescribe(); // get all objects in the org
-        for(Schema.SObjectType item : gd.values()){
+        Map<String, Schema.SObjectType> objects = Schema.getGlobalDescribe();
+
+        for(Schema.SObjectType item : objects.values()) {
             Schema.DescribeSObjectResult sobjectDescribe = item.getDescribe();
 
-            //add only accessible objects to running user 
-            if(sobjectDescribe.isAccessible()){
+            if(sobjectDescribe.isAccessible()) {
                 dynamicPicklistValues.addRow(new VisualEditor.DataRow(sobjectDescribe.getName(),sobjectDescribe.getLabel()));
             }
         }
